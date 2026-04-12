@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { ProjectDetailHero, ProjectFeatures } from '$lib';
 
 	let { data } = $props();
@@ -6,7 +7,7 @@
 
 <div class="hero-screen">
 	<div class="back-link-wrap">
-		<a href="/" class="back-link">← 돌아가기</a>
+		<a href="{base}/" class="back-link">← 돌아가기</a>
 	</div>
 
 	<ProjectDetailHero project={data.project} />

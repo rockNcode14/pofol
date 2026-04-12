@@ -1,7 +1,11 @@
+<script>
+	import { base } from '$app/paths';
+</script>
+
 <section class="hero">
 	<div class="image-wrap">
 		<img
-			src="/profile.jpeg"
+			src="{base}/profile.jpeg"
 			alt="Profile"
 			class="profile-image"
 		/>

@@ -1,20 +1,24 @@
+<script>
+	import { base } from '$app/paths';
+</script>
+
 <nav>
 	<div class="accent-bar"></div>
 	<div class="navbar">
-		<a href="/#top" class="logo">YN</a>
+		<a href="{base}/#top" class="logo">YN</a>
 
 		<div class="nav-links">
-			<a href="/#toy">Toy</a>
-			<a href="/#company">Company</a>
-			<a href="/#career">Career</a>
+			<a href="{base}/#toy">Toy</a>
+			<a href="{base}/#company">Company</a>
+			<a href="{base}/#career">Career</a>
 		</div>
 
-		<a href="/#contact" class="contact-btn">연락하기</a>
+		<a href="{base}/#contact" class="contact-btn">연락하기</a>
 	</div>
 
 	<!-- Mobile: logo only -->
 	<div class="navbar-mobile">
-		<a href="/#top" class="logo">YN</a>
+		<a href="{base}/#top" class="logo">YN</a>
 	</div>
 </nav>
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	let {
 		icon,
 		title,
@@ -7,7 +8,7 @@
 	}: { icon: string; title: string; description: string; slug: string } = $props();
 </script>
 
-<a href="/project/{slug}" class="card-link">
+<a href="{base}/project/{slug}" class="card-link">
 	<div class="card">
 		<div class="icon-wrap">
 			<span class="icon">{icon}</span>
