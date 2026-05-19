@@ -1,13 +1,12 @@
 <script lang="ts">
 	import '$lib/styles/global.css';
 	import { Navbar } from '$lib';
-	import favicon from '$lib/assets/favicon.svg';
 
 	let { children } = $props();
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<title>이원기의 포트폴리오</title>
 </svelte:head>
 
 <Navbar />
