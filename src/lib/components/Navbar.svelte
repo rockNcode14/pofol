@@ -1,5 +1,7 @@
 <script>
 	import { base } from '$app/paths';
+
+	let showModal = $state(false);
 </script>
 
 <nav>
@@ -13,7 +15,7 @@
 			<a href="{base}/#career">Career</a>
 		</div>
 
-		<a href="{base}/#contact" class="contact-btn">연락하기</a>
+		<button class="contact-btn" onclick={() => showModal = true}>연락하기</button>
 	</div>
 
 	<!-- Mobile: logo only -->
@@ -21,6 +23,31 @@
 		<a href="{base}/#top" class="logo">YN</a>
 	</div>
 </nav>
+
+{#if showModal}
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div class="modal-overlay" onclick={() => showModal = false} onkeydown={(e) => e.key === 'Escape' && (showModal = false)}>
+	<!-- svelte-ignore a11y_no_static_element_interactions -->
+	<div class="modal" onclick={(e) => e.stopPropagation()} onkeydown={() => {}}>
+		<button class="modal-close" onclick={() => showModal = false}>&times;</button>
+		<h2 class="modal-title">Contact</h2>
+		<div class="modal-info">
+			<div class="info-row">
+				<span class="info-label">Name</span>
+				<span class="info-value">이원기</span>
+			</div>
+			<div class="info-row">
+				<span class="info-label">Email</span>
+				<a href="mailto:dnjs1490@gmail.com" class="info-value info-link">dnjs1490@gmail.com</a>
+			</div>
+			<div class="info-row">
+				<span class="info-label">Phone</span>
+				<a href="tel:01090481490" class="info-value info-link">010-9048-1490</a>
+			</div>
+		</div>
+	</div>
+</div>
+{/if}
 
 <style>
 	nav {
@@ -110,6 +137,78 @@
 	.contact-btn:hover {
 		background-color: var(--color-border);
 		color: var(--color-white);
+	}
+
+	.modal-overlay {
+		position: fixed;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 200;
+	}
+
+	.modal {
+		background: var(--color-white);
+		border-radius: var(--radius-md);
+		padding: 2.5rem;
+		min-width: 360px;
+		max-width: 90vw;
+		position: relative;
+		border: 4px solid var(--color-border);
+	}
+
+	.modal-close {
+		position: absolute;
+		top: 0.75rem;
+		right: 1rem;
+		background: none;
+		border: none;
+		font-size: 2rem;
+		cursor: pointer;
+		color: var(--color-text);
+		line-height: 1;
+	}
+
+	.modal-title {
+		font-size: 1.75rem;
+		font-weight: 900;
+		margin-bottom: 1.5rem;
+		color: var(--color-text);
+	}
+
+	.modal-info {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.info-row {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.info-label {
+		font-weight: 900;
+		font-size: 1rem;
+		min-width: 60px;
+		color: var(--color-accent);
+	}
+
+	.info-value {
+		font-size: 1rem;
+		color: var(--color-text);
+	}
+
+	.info-link {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	.info-link:hover {
+		color: var(--color-accent);
 	}
 
 	@media (max-width: 768px) {

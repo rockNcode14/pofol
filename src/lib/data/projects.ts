@@ -79,42 +79,58 @@ export const personalProjects: Project[] = [
     },
     {
         icon: '📊',
-        title: '한의원 재고관리 서비스',
+        title: '수톡(Sootock) - 한의원 재고관리 서비스',
         description: '한약 재고 실시간 추적 및 알림 시스템',
         slug: 'inventory-management',
         longDescription:
-            '한의원을 위한 한약 재고 관리 시스템입니다. 입출고 등록·이력 관리, 실시간 재고 현황 조회, 유통기한 임박 알림, 안전재고 미달 경고 등을 대시보드에서 한눈에 확인할 수 있습니다. 기준정보(품목·코드) 관리와 역할 기반 사용자 관리, 엑셀 내보내기 기능도 제공합니다.',
-        techStack: ['SvelteKit', 'NestJS', 'PostgreSQL', 'Tailwind CSS', 'Tabulator', 'Docker', 'Nginx'],
+            '지인의 의뢰로 제작한 한의원 한약 재고 관리 시스템입니다. 입출고 등록·이력 관리, 실시간 재고 현황 조회, 유통기한 임박 알림, 안전재고 미달 경고 등을 대시보드에서 한눈에 확인할 수 있습니다. Svelte 5 + SvelteKit 프론트엔드와 NestJS 백엔드로 구성되며, Tabulator 기반 고기능 데이터 테이블과 Flowbite UI로 직관적인 관리 화면을 제공합니다.',
+        techStack: ['Svelte 5', 'SvelteKit', 'NestJS', 'TypeORM', 'PostgreSQL', 'Tailwind CSS', 'Tabulator', 'JWT', 'Docker', 'Nginx'],
         features: [
             { title: '대시보드', description: '총 재고량, 유통기한 임박(30일 이내), 안전재고 미달, 활성 품목 수 등 4가지 KPI 카드와 최근 거래 내역을 실시간으로 표시합니다.' },
             { title: '입출고 관리', description: '입고·출고 등록 시 행 단위 CRUD 추적(I/U/D)과 유효성 검증을 수행하며, 일괄 저장 방식으로 처리합니다.' },
             { title: '실시간 재고 현황', description: '품목별 현재 재고량(입고 합계 - 출고 합계)을 실시간 집계하고, 품목 클릭 시 전체 거래 이력을 조회할 수 있습니다.' },
             { title: '유통기한·안전재고 알림', description: '유통기한 임박 품목을 잔여일수별 색상 구분으로 표시하고, 안전재고 미달 품목은 부족량 심각도에 따라 경고합니다.' },
             { title: '기준정보 관리', description: '품목 마스터(품목코드·분류·단위·안전재고)와 계층형 코드 마스터(대분류·소분류)를 관리합니다.' },
-            { title: '사용자 관리', description: 'JWT 기반 인증, 역할별 접근 제어(관리자/매니저/사용자), 회원가입 승인 워크플로우를 제공합니다.' }
+            { title: '사용자 관리', description: 'JWT 기반 인증, 역할별 접근 제어(관리자/사용자), 회원가입 승인 워크플로우를 제공합니다.' }
         ],
         period: '2024',
         role: '풀스택 개발',
         detailSections: [
             {
-                title: '실시간 대시보드',
-                content: '총 재고량, 유통기한 임박 품목(30일 이내), 안전재고 미달 품목, 활성 품목 수를 KPI 카드로 표시합니다. 유통기한 임박 품목은 잔여일수에 따라 빨강/노랑/초록으로 구분하고, 안전재고 미달 품목은 부족량 심각도별로 색상 경고를 제공합니다.'
+                title: 'Backend — 인증 및 사용자 관리',
+                content: 'NestJS + Passport.js 기반 JWT 인증 시스템을 구현했습니다. bcrypt 패스워드 해싱, 14시간 만료 토큰, 커스텀 데코레이터(@CurrentUser)를 통한 사용자 주입, 역할 기반 접근제어(ADMIN/USER)를 적용했습니다. 회원가입 시 PENDING → 관리자 승인 → ACTIVE 워크플로우를 통해 비인가 접근을 차단합니다.'
             },
             {
-                title: '입출고 등록 및 이력 관리',
-                content: '입고·출고를 행 단위로 추가·수정·삭제하며, 변경 상태(I/U/D)를 추적하여 일괄 저장합니다. 품목 검색 모달, 단위·분류 드롭다운 등 편의 기능을 제공하며, 등록된 모든 거래는 이력 화면에서 조회 및 엑셀 내보내기가 가능합니다.'
+                title: 'Backend — 입고 관리 및 자동채번',
+                content: '입고번호를 날짜 기반 시퀀스(yyyyMMdd + 3자리)로 자동 생성하며, 입고 등록 시 RealStock(현재고) 테이블을 자동 가산합니다. 조제일자를 별도 관리하고, 일별/월별 이력을 피벗 테이블 형태로 조회할 수 있습니다. 하나의 POST 엔드포인트에서 rowStatus(I/U/D) 필드를 통해 다중 행의 등록·수정·삭제를 일괄 처리하는 Multi-Row 패턴을 적용했습니다.'
             },
             {
-                title: '재고 현황 및 거래 이력 조회',
-                content: '품목별 현재 재고량을 입고 합계 - 출고 합계로 실시간 집계하여 표시합니다. 각 품목의 거래 이력 아이콘을 클릭하면 해당 품목의 전체 입출고 내역을 모달로 조회할 수 있습니다.'
+                title: 'Backend — 출고 및 현재고 실시간 동기화',
+                content: '출고 등록 시 RealStock 현재고를 자동 차감하고, 입고번호 연결을 통해 추적성(traceability)을 확보합니다. 수정·삭제 시에도 재고를 정확히 원복 처리합니다. RealStock 테이블은 decimal(15,2) 정밀도로 소수점 수량을 지원하며, 재고 0 이하 시 자동 삭제됩니다.'
             },
             {
-                title: '기준정보 관리',
-                content: '품목 마스터에서 품목코드, 품목명, 분류, 단위, 안전재고 수량을 관리하고, 계층형 코드 마스터에서 대분류(코드그룹)와 소분류(코드상세)를 좌우 패널로 동기화하여 관리합니다.'
+                title: 'Backend — 대시보드 API 및 보안',
+                content: '안전재고 이하 품목, 유통기한 30일 이내 임박 품목, 전체 재고 요약, 최근 입출고 내역을 집계하는 대시보드 API를 제공합니다. Helmet(보안 헤더), @nestjs/throttler(60초당 100회 Rate Limiting), CORS 제한, TypeORM 파라미터 바인딩 + class-validator whitelist 검증으로 보안을 강화했습니다.'
             },
             {
-                title: '사용자 관리 및 인증',
-                content: 'JWT 토큰 기반 인증과 Axios 인터셉터를 통한 자동 인증 처리를 구현했습니다. 관리자/매니저/사용자 역할별 접근 제어와 회원가입 승인 워크플로우를 제공합니다.'
+                title: 'Backend — DB 설계 및 감사 추적',
+                content: 'User, Handstock(입고), StockHst(출고/이력), StockBase(품목 마스터), RealStock(현재고), CodeGroup/CodeDetail(공통코드) 등 TypeORM Repository 패턴으로 엔티티를 설계했습니다. 모든 엔티티에 created_by, updated_by, created_at, updated_at 필드를 포함하여 데이터 변경 이력을 자동 추적합니다.'
+            },
+            {
+                title: 'Frontend — 대시보드 UI',
+                content: '4개 핵심 KPI 카드(전체 재고 수, 유통기한 임박, 안전재고 이하, 활성 품목)와 유통기한 임박 재고, 발주 시급 재고, 최근 5건 입출고 내역을 한 화면에 표시합니다. 색상 코드 배지(녹색=입고, 보라=출고, 빨강=긴급)와 Svelte transition 애니메이션을 적용했습니다.'
+            },
+            {
+                title: 'Frontend — Tabulator 기반 데이터 테이블',
+                content: '입고/출고/품목/코드 등 거의 모든 데이터 관리 화면에 Tabulator Tables 6.3을 활용했습니다. 인라인 셀 편집, 3단 정렬, 컬럼 리사이즈, 필터링·페이지네이션, 커스텀 포매터, 라이트/다크 모드 자동 전환을 지원합니다. 싱글톤 패턴으로 메인/서브 테이블 간 수정·추가·삭제 상태를 일괄 관리합니다.'
+            },
+            {
+                title: 'Frontend — 인증 흐름 및 상태 관리',
+                content: 'localStorage 기반으로 JWT 토큰과 사용자 정보를 관리하며, Fetch Wrapper(fetchWithAuth)가 모든 요청에 Authorization 헤더를 자동 주입합니다. 401 응답 시 토큰 삭제 및 자동 로그아웃 처리를 수행하고, beforeNavigate 훅으로 라우트 가드를 구현하여 비인증 사용자의 접근을 차단합니다.'
+            },
+            {
+                title: 'Frontend — 재사용 컴포넌트 및 UI/UX',
+                content: 'Flowbite-Svelte UI 라이브러리와 Tailwind CSS를 활용하여 SearchForm, DateInput, ItemCdInput, MonthInput, SelectInput 등 재사용 폼 컴포넌트와 FormModal, TableModal 등 모달 컴포넌트를 설계했습니다. 접이식 사이드바 네비게이션, 다크 모드 토글, 모바일 반응형 그리드 레이아웃을 적용했습니다.'
             }
         ]
     },
@@ -124,7 +140,7 @@ export const personalProjects: Project[] = [
         description: '강서구 셔틀버스 정보 앱',
         slug: 'gangseo-shuttle',
         longDescription:
-            '강서구 셔틀버스 노선, 시간표, 실시간 위치 정보를 제공하는 모바일 앱입니다.',
+            '기존 강서구 셔틀버스 앱이 특정 시간대에 동작하지 않는 문제가 있어, 이를 해결하기 위해 직접 제작한 모바일 앱입니다. 셔틀버스 노선, 시간표, 실시간 위치 정보를 안정적으로 제공합니다.',
         techStack: ['React Native', 'TypeScript', 'Express'],
         features: [
             { title: '노선 안내', description: '셔틀버스 노선 및 정류장 정보' },
